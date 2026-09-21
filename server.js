@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 const server = http.createServer((req, res) => {
     // Siempre servimos el archivo de las flores amarillas
-    let filePath = path.join(__dirname, 'flores_amarillas.html');
+    let filePath = path.join(__dirname, 'index.html');
     
     fs.readFile(filePath, (err, content) => {
         if (err) {
