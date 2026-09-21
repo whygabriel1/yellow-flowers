@@ -38,10 +38,31 @@
             text-shadow: 0 0 20px rgba(255, 235, 59, 0.5), 0 0 40px rgba(255, 235, 59, 0.3);
             animation: pulse 2s infinite alternate;
         }
-        p {
+        .subtitle {
             font-size: 1.5rem;
             color: #e0e0e0;
             margin-top: 10px;
+            font-weight: bold;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-top: 25px;
+            max-width: 500px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            color: #f8f8f8;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            animation: fadeIn 3s ease-in-out;
+            pointer-events: auto; /* Permite seleccionar el texto */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes pulse {
             0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 235, 59, 0.5); }
@@ -52,7 +73,10 @@
 <body>
     <div class="message">
         <h1>Flores Amarillas</h1>
-        <p>Para ti 🌻</p>
+        <p class="subtitle">Para ti 🌻</p>
+        <div class="card">
+            Eres una persona increíble, llena de luz, alegría y muchísima bondad. El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen, empezando por estas flores amarillas que nunca se van a marchitar. ¡Gracias por ser una persona tan especial y única! ✨💛
+        </div>
     </div>
     <canvas id="canvas"></canvas>
     
