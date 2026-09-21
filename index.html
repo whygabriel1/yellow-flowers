@@ -31,18 +31,30 @@
             text-align: center;
             pointer-events: none;
         }
-        h1 {
+        h1.main-title {
             font-size: 4rem;
             margin: 0;
             color: #ffeb3b;
             text-shadow: 0 0 20px rgba(255, 235, 59, 0.5), 0 0 40px rgba(255, 235, 59, 0.3);
             animation: pulse 2s infinite alternate;
         }
-        .subtitle {
-            font-size: 1.5rem;
-            color: #e0e0e0;
-            margin-top: 10px;
+        .glow-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
             font-weight: bold;
+            color: #4a3300;
+            background: linear-gradient(45deg, #ffeb3b, #fbc02d);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 235, 59, 0.4);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+        }
+        .glow-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 235, 59, 0.6);
         }
         .card {
             background: rgba(255, 255, 255, 0.1);
@@ -50,19 +62,41 @@
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
-            padding: 20px 30px;
-            margin-top: 25px;
-            max-width: 500px;
+            padding: 30px 25px;
+            max-width: 90%;
+            width: 500px;
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
             color: #f8f8f8;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             line-height: 1.6;
-            animation: fadeIn 3s ease-in-out;
-            pointer-events: auto; /* Permite seleccionar el texto */
+            pointer-events: none;
+            opacity: 0;
+            
+            position: absolute;
+            top: 130%;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px) scale(0.95);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        .card.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .close-btn:hover {
+            opacity: 1;
         }
         @keyframes pulse {
             0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 235, 59, 0.5); }
@@ -72,15 +106,29 @@
 </head>
 <body>
     <div class="message">
-        <h1>Flores Amarillas</h1>
-        <p class="subtitle">Para ti 🌻</p>
-        <div class="card">
+        <h1 class="main-title">Para ti 🌻</h1>
+        <button id="btn-mensaje" class="glow-btn">✨ Leer mensaje ✨</button>
+        <div class="card" id="tarjeta-mensaje">
+            <button id="btn-cerrar" class="close-btn">✖</button>
             Eres una persona increíble, llena de luz, alegría y muchísima bondad. El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen, empezando por estas flores amarillas que nunca se van a marchitar. ¡Gracias por ser una persona tan especial y única! ✨💛
         </div>
     </div>
     <canvas id="canvas"></canvas>
     
     <script>
+        // Lógica de los botones del mensaje
+        const btnMensaje = document.getElementById('btn-mensaje');
+        const tarjetaMensaje = document.getElementById('tarjeta-mensaje');
+        const btnCerrar = document.getElementById('btn-cerrar');
+
+        btnMensaje.addEventListener('click', () => {
+            tarjetaMensaje.classList.add('show');
+        });
+
+        btnCerrar.addEventListener('click', () => {
+            tarjetaMensaje.classList.remove('show');
+        });
+
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
