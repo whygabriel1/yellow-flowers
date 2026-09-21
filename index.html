@@ -104,6 +104,20 @@
                 this.scale = 0;
                 this.targetScale = 1;
                 this.growthSpeed = 0.01 + Math.random() * 0.015;
+                
+                // Generar semillas en espiral perfecta (como un girasol real)
+                this.seeds = [];
+                const goldenAngle = 137.5 * (Math.PI / 180);
+                const numSeeds = 60; // Más semillas para un mejor efecto
+                const c = (this.radius / 2.2) / Math.sqrt(numSeeds);
+                for(let i = 1; i <= numSeeds; i++) {
+                    let a = i * goldenAngle;
+                    let r = c * Math.sqrt(i);
+                    this.seeds.push({
+                        x: Math.cos(a) * r,
+                        y: Math.sin(a) * r
+                    });
+                }
             }
 
             drawStem(currentX, currentY) {
@@ -173,11 +187,9 @@
 
                 // Puntos del centro (semillas)
                 ctx.fillStyle = '#fff8e1';
-                for(let i = 0; i < 30; i++) {
-                    let a = Math.random() * Math.PI * 2;
-                    let r = Math.random() * (this.radius / 2);
+                for(let seed of this.seeds) {
                     ctx.beginPath();
-                    ctx.arc(Math.cos(a)*r, Math.sin(a)*r, 1.5, 0, Math.PI*2);
+                    ctx.arc(seed.x, seed.y, 1.5, 0, Math.PI*2);
                     ctx.fill();
                 }
 
