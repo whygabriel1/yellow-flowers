@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,6 +18,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #fff;
         }
+
         canvas {
             position: absolute;
             top: 0;
@@ -25,12 +27,14 @@
             height: 100%;
             z-index: 1;
         }
+
         .message {
             position: relative;
             z-index: 2;
             text-align: center;
             pointer-events: none;
         }
+
         h1.main-title {
             font-size: 4rem;
             margin: 0;
@@ -38,6 +42,7 @@
             text-shadow: 0 0 20px rgba(255, 235, 59, 0.5), 0 0 40px rgba(255, 235, 59, 0.3);
             animation: pulse 2s infinite alternate;
         }
+
         .glow-btn {
             margin-top: 20px;
             padding: 12px 25px;
@@ -52,10 +57,12 @@
             transition: all 0.3s ease;
             pointer-events: auto;
         }
+
         .glow-btn:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(255, 235, 59, 0.6);
         }
+
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -73,10 +80,12 @@
             pointer-events: none;
             transition: all 0.4s ease;
         }
+
         .modal-overlay.show {
             opacity: 1;
             pointer-events: auto;
         }
+
         .card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(15px);
@@ -94,9 +103,11 @@
             transform: scale(0.8) translateY(30px);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
         .modal-overlay.show .card {
             transform: scale(1) translateY(0);
         }
+
         .close-btn {
             position: absolute;
             top: 10px;
@@ -109,15 +120,25 @@
             opacity: 0.7;
             transition: opacity 0.3s;
         }
+
         .close-btn:hover {
             opacity: 1;
         }
+
         @keyframes pulse {
-            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 235, 59, 0.5); }
-            100% { transform: scale(1.05); text-shadow: 0 0 30px rgba(255, 235, 59, 0.8), 0 0 60px rgba(255, 235, 59, 0.4); }
+            0% {
+                transform: scale(1);
+                text-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
+            }
+
+            100% {
+                transform: scale(1.05);
+                text-shadow: 0 0 30px rgba(255, 235, 59, 0.8), 0 0 60px rgba(255, 235, 59, 0.4);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="message">
         <h1 class="main-title">Para ti 🌻</h1>
@@ -127,13 +148,14 @@
     <div id="modal-overlay" class="modal-overlay">
         <div class="card">
             <button id="btn-cerrar" class="close-btn">✖</button>
-            Eres una persona increíble, llena de luz, alegría y muchísima bondad.<br><br>
-            El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen, empezando por estas flores amarillas que nunca se van a marchitar.<br><br>
-            ¡Gracias por ser una persona tan especial y única! ✨💛
+            Eres una persona increíble, unica, llena de luz y alegría.<br><br>
+            El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen,
+            empezando por estas flores amarillas que nunca se van a marchitar.<br><br>
+            Gracias por ser la persona que eres. Te quiero! ✨💛
         </div>
     </div>
     <canvas id="canvas"></canvas>
-    
+
     <script>
         // Lógica de los botones del mensaje
         const btnMensaje = document.getElementById('btn-mensaje');
@@ -178,13 +200,13 @@
                 this.scale = 0;
                 this.targetScale = 1;
                 this.growthSpeed = 0.01 + Math.random() * 0.015;
-                
+
                 // Generar semillas en espiral perfecta (como un girasol real)
                 this.seeds = [];
                 const goldenAngle = 137.5 * (Math.PI / 180);
                 const numSeeds = 60; // Más semillas para un mejor efecto
                 const c = (this.radius / 2.2) / Math.sqrt(numSeeds);
-                for(let i = 1; i <= numSeeds; i++) {
+                for (let i = 1; i <= numSeeds; i++) {
                     let a = i * goldenAngle;
                     let r = c * Math.sqrt(i);
                     this.seeds.push({
@@ -236,12 +258,12 @@
                     ctx.rotate((Math.PI * 2) / this.petals);
                     ctx.beginPath();
                     ctx.ellipse(0, this.radius, this.radius / 2.5, this.radius, 0, 0, Math.PI * 2);
-                    
+
                     let gradient = ctx.createLinearGradient(0, 0, 0, this.radius * 2);
                     gradient.addColorStop(0, '#fff59d');
                     gradient.addColorStop(0.5, '#ffee58');
                     gradient.addColorStop(1, '#fbc02d');
-                    
+
                     ctx.fillStyle = gradient;
                     ctx.fill();
                     ctx.strokeStyle = '#f57f17';
@@ -261,9 +283,9 @@
 
                 // Puntos del centro (semillas)
                 ctx.fillStyle = '#fff8e1';
-                for(let seed of this.seeds) {
+                for (let seed of this.seeds) {
                     ctx.beginPath();
-                    ctx.arc(seed.x, seed.y, 1.5, 0, Math.PI*2);
+                    ctx.arc(seed.x, seed.y, 1.5, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
@@ -272,7 +294,7 @@
         }
 
         const flowers = [];
-        
+
         function initFlowers() {
             flowers.length = 0;
             const numFlowers = Math.floor(window.innerWidth / 80);
@@ -288,7 +310,7 @@
 
         // Luciérnagas
         const fireflies = [];
-        for(let i = 0; i < 50; i++) {
+        for (let i = 0; i < 50; i++) {
             fireflies.push({
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
@@ -300,14 +322,14 @@
         }
 
         function drawFireflies() {
-            for(let f of fireflies) {
+            for (let f of fireflies) {
                 f.x += f.speedX;
                 f.y += f.speedY;
                 f.alpha += (Math.random() - 0.5) * 0.1;
-                
+
                 if (f.alpha < 0) f.alpha = 0;
                 if (f.alpha > 1) f.alpha = 1;
-                
+
                 if (f.x < 0) f.x = canvas.width;
                 if (f.x > canvas.width) f.x = 0;
                 if (f.y < 0) f.y = canvas.height;
@@ -325,15 +347,15 @@
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+
             drawFireflies();
-            
+
             flowers.sort((a, b) => a.y - b.y);
-            
+
             for (const flower of flowers) {
                 flower.draw();
             }
-            
+
             requestAnimationFrame(animate);
         }
 
@@ -344,4 +366,5 @@
         });
     </script>
 </body>
+
 </html>
