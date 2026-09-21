@@ -217,6 +217,17 @@
 
         btnMensaje.addEventListener('click', () => {
             modalOverlay.classList.add('show');
+            
+            // Solicitar permisos de giroscopio en iOS 13+
+            if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                DeviceOrientationEvent.requestPermission()
+                    .then(permissionState => {
+                        if (permissionState === 'granted') {
+                            window.addEventListener('deviceorientation', handleOrientation);
+                        }
+                    })
+                    .catch(console.error);
+            }
         });
 
         btnCerrar.addEventListener('click', () => {
@@ -236,6 +247,26 @@
         window.addEventListener('touchstart', (e) => { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; });
         window.addEventListener('touchmove', (e) => { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; });
         window.addEventListener('touchend', () => { pointer.x = null; pointer.y = null; });
+
+        // Interacción con giroscopio
+        let gyroForceX = 0;
+        let gyroForceY = 0;
+        function handleOrientation(e) {
+            if (e.gamma !== null) {
+                // gamma va de -90 a 90, limitamos de -45 a 45 para máxima sensibilidad
+                let tiltX = e.gamma / 45;
+                if (tiltX > 1) tiltX = 1;
+                if (tiltX < -1) tiltX = -1;
+                gyroForceX = tiltX * 40; // Fuerza del viento por giroscopio
+
+                let tiltY = (e.beta - 45) / 45; // Asumiendo ángulo de agarre normal
+                if (tiltY > 1) tiltY = 1;
+                if (tiltY < -1) tiltY = -1;
+                gyroForceY = tiltY * 20;
+            }
+        }
+        // Para dispositivos Android o sin necesidad de permisos
+        window.addEventListener('deviceorientation', handleOrientation);
 
         // Canvas Logic
         const canvas = document.getElementById('canvas');
@@ -366,15 +397,16 @@
                 this.interactionVelocity *= 0.92; // Fricción
                 this.interactionX += this.interactionVelocity;
 
-                const currentX = this.x + Math.sin(this.time) * 15 + this.interactionX;
-                const currentY = this.y + Math.cos(this.time) * 8 + Math.abs(this.interactionX) * 0.2;
+                // Aplicamos tanto la física del resorte como la fuerza del giroscopio
+                const currentX = this.x + Math.sin(this.time) * 15 + this.interactionX + gyroForceX;
+                const currentY = this.y + Math.cos(this.time) * 8 + Math.abs(this.interactionX) * 0.2 + Math.abs(gyroForceX) * 0.1;
 
                 this.drawStem(currentX, currentY);
 
                 ctx.save();
                 ctx.translate(currentX, currentY);
                 ctx.scale(this.scale, this.scale);
-                ctx.rotate(this.angle + Math.sin(this.time) * 0.15 + (this.interactionX * 0.015));
+                ctx.rotate(this.angle + Math.sin(this.time) * 0.15 + (this.interactionX * 0.015) + (gyroForceX * 0.005));
 
                 // Pétalos con color y borde más suave
                 for (let i = 0; i < this.petals; i++) {
@@ -447,8 +479,8 @@
 
         function drawFireflies() {
             for (let f of fireflies) {
-                f.x += f.speedX;
-                f.y += f.speedY;
+                f.x += f.speedX + (gyroForceX * 0.03); // El viento mueve las luciérnagas
+                f.y += f.speedY + (gyroForceY * 0.03);
                 f.alpha += (Math.random() - 0.5) * 0.05;
 
                 if (f.alpha < 0) f.alpha = 0;
