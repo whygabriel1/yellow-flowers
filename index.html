@@ -5,17 +5,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flores Amarillas</title>
+    <!-- Google Fonts para un toque moderno y elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Outfit:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
     <style>
         body {
             margin: 0;
             padding: 0;
-            background-color: #0d1117;
+            /* Fondo gradiente de noche mágica */
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Outfit', sans-serif;
             color: #fff;
         }
 
@@ -33,34 +41,49 @@
             z-index: 2;
             text-align: center;
             pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1.main-title {
-            font-size: 4rem;
+            font-family: 'Dancing Script', cursive;
+            font-size: 5.5rem;
             margin: 0;
-            color: #ffeb3b;
-            text-shadow: 0 0 20px rgba(255, 235, 59, 0.5), 0 0 40px rgba(255, 235, 59, 0.3);
-            animation: pulse 2s infinite alternate;
+            color: #fffde7;
+            text-shadow: 0 0 15px rgba(255, 235, 59, 0.4), 0 0 30px rgba(255, 235, 59, 0.2);
+            animation: float 4s ease-in-out infinite;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
 
         .glow-btn {
-            margin-top: 20px;
-            padding: 12px 25px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #4a3300;
-            background: linear-gradient(45deg, #ffeb3b, #fbc02d);
-            border: none;
-            border-radius: 30px;
+            margin-top: 30px;
+            padding: 15px 35px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            /* Estilo Glassmorphism moderno */
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 235, 59, 0.5);
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 235, 59, 0.4);
-            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 235, 59, 0.1);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
             pointer-events: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .glow-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255, 235, 59, 0.6);
+            transform: translateY(-3px);
+            background: rgba(255, 235, 59, 0.2);
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.4), inset 0 0 15px rgba(255, 235, 59, 0.3);
+            border-color: rgba(255, 235, 59, 0.9);
         }
 
         .modal-overlay {
@@ -69,16 +92,16 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            background: rgba(15, 12, 41, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             z-index: 10;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: all 0.4s ease;
+            transition: all 0.5s ease;
         }
 
         .modal-overlay.show {
@@ -87,21 +110,31 @@
         }
 
         .card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            padding: 40px 30px;
-            max-width: 90%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.03));
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            border-left: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            padding: 50px 40px;
+            max-width: 85%;
             width: 450px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
-            color: #f8f8f8;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            color: #f0f0f0;
             font-size: 1.15rem;
-            line-height: 1.6;
+            line-height: 1.7;
             text-align: center;
-            transform: scale(0.8) translateY(30px);
+            transform: scale(0.9) translateY(20px);
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card p {
+            margin-bottom: 15px;
+        }
+
+        .card p:last-child {
+            margin-bottom: 0;
         }
 
         .modal-overlay.show .card {
@@ -110,30 +143,49 @@
 
         .close-btn {
             position: absolute;
-            top: 10px;
-            right: 15px;
-            background: none;
-            border: none;
+            top: 15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: #fff;
             font-size: 1.2rem;
             cursor: pointer;
-            opacity: 0.7;
-            transition: opacity 0.3s;
+            transition: all 0.3s ease;
         }
 
         .close-btn:hover {
-            opacity: 1;
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
         }
 
-        @keyframes pulse {
+        @keyframes float {
             0% {
-                transform: scale(1);
-                text-shadow: 0 0 20px rgba(255, 235, 59, 0.5);
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-10px);
             }
 
             100% {
-                transform: scale(1.05);
-                text-shadow: 0 0 30px rgba(255, 235, 59, 0.8), 0 0 60px rgba(255, 235, 59, 0.4);
+                transform: translateY(0px);
+            }
+        }
+
+        @media (max-width: 600px) {
+            h1.main-title {
+                font-size: 4rem;
+            }
+
+            .card {
+                padding: 40px 25px;
+                font-size: 1.05rem;
             }
         }
     </style>
@@ -141,23 +193,24 @@
 
 <body>
     <div class="message">
-        <h1 class="main-title">Para ti 🌻</h1>
-        <button id="btn-mensaje" class="glow-btn">✨ Leer mensaje ✨</button>
+        <h1 class="main-title">Para ti</h1>
+        <button id="btn-mensaje" class="glow-btn"> Leer mensaje </button>
     </div>
 
     <div id="modal-overlay" class="modal-overlay">
         <div class="card">
             <button id="btn-cerrar" class="close-btn">✖</button>
-            Eres una persona increíble, unica, llena de luz y alegría.<br><br>
-            El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen,
-            empezando por estas flores amarillas que nunca se van a marchitar.<br><br>
-            Gracias por ser la persona que eres. Te quiero! ✨💛
+            <p>Eres una persona increíble, única, llena de luz y alegría.</p>
+            <p>El mundo es un lugar mucho más bonito contigo en él. Mereces todas las cosas maravillosas que existen,
+                empezando por estas flores amarillas que nunca se van a marchitar.</p>
+            <p>Gracias por ser la persona que eres. ¡Te quiero! ✨💛</p>
         </div>
     </div>
+
     <canvas id="canvas"></canvas>
 
     <script>
-        // Lógica de los botones del mensaje
+        // Modal Logic
         const btnMensaje = document.getElementById('btn-mensaje');
         const modalOverlay = document.getElementById('modal-overlay');
         const btnCerrar = document.getElementById('btn-cerrar');
@@ -170,13 +223,21 @@
             modalOverlay.classList.remove('show');
         });
 
-        // Cerrar si hace clic fuera de la tarjeta
         modalOverlay.addEventListener('click', (e) => {
             if (e.target === modalOverlay) {
                 modalOverlay.classList.remove('show');
             }
         });
 
+        // Interacción con el cursor/toque
+        const pointer = { x: null, y: null };
+        window.addEventListener('mousemove', (e) => { pointer.x = e.clientX; pointer.y = e.clientY; });
+        window.addEventListener('mouseleave', () => { pointer.x = null; pointer.y = null; });
+        window.addEventListener('touchstart', (e) => { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; });
+        window.addEventListener('touchmove', (e) => { pointer.x = e.touches[0].clientX; pointer.y = e.touches[0].clientY; });
+        window.addEventListener('touchend', () => { pointer.x = null; pointer.y = null; });
+
+        // Canvas Logic
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
 
@@ -192,20 +253,23 @@
                 this.x = x;
                 this.y = y;
                 this.radius = radius;
-                this.petals = 12;
+                this.petals = 14;
                 this.angle = Math.random() * Math.PI * 2;
-                this.swaySpeed = 0.005 + Math.random() * 0.01;
+                this.swaySpeed = 0.003 + Math.random() * 0.005; // Movimiento más suave
                 this.time = Math.random() * 100;
                 this.stemHeight = canvas.height - y + 100;
                 this.scale = 0;
                 this.targetScale = 1;
-                this.growthSpeed = 0.01 + Math.random() * 0.015;
+                this.growthSpeed = 0.008 + Math.random() * 0.01;
+                
+                // Variables para interacción
+                this.interactionX = 0;
+                this.interactionVelocity = 0;
 
-                // Generar semillas en espiral perfecta (como un girasol real)
                 this.seeds = [];
                 const goldenAngle = 137.5 * (Math.PI / 180);
-                const numSeeds = 60; // Más semillas para un mejor efecto
-                const c = (this.radius / 2.2) / Math.sqrt(numSeeds);
+                const numSeeds = 70;
+                const c = (this.radius / 2.3) / Math.sqrt(numSeeds);
                 for (let i = 1; i <= numSeeds; i++) {
                     let a = i * goldenAngle;
                     let r = c * Math.sqrt(i);
@@ -214,26 +278,68 @@
                         y: Math.sin(a) * r
                     });
                 }
+
+                // Hojas caulinares
+                this.leaves = [];
+                const numLeaves = 2 + Math.floor(Math.random() * 3);
+                for (let i = 0; i < numLeaves; i++) {
+                    this.leaves.push({
+                        t: 0.2 + (0.5 * (i / numLeaves)) + (Math.random() * 0.1),
+                        angle: Math.PI / 6 + Math.random() * 0.3,
+                        size: 15 + Math.random() * 10,
+                        direction: i % 2 === 0 ? 1 : -1 // 1 derecha, -1 izquierda
+                    });
+                }
             }
 
             drawStem(currentX, currentY) {
+                const cpX = this.x;
+                const cpY = canvas.height - this.stemHeight / 2;
+
                 ctx.beginPath();
-                ctx.moveTo(this.x, canvas.height + 100); // Base del tallo
-                ctx.quadraticCurveTo(this.x, canvas.height - this.stemHeight / 2, currentX, currentY);
-                ctx.lineWidth = 6 * this.scale;
-                ctx.strokeStyle = '#2e7d32';
+                ctx.moveTo(this.x, canvas.height + 100);
+                ctx.quadraticCurveTo(cpX, cpY, currentX, currentY);
+                ctx.lineWidth = 5 * this.scale;
+
+                let stemGrad = ctx.createLinearGradient(this.x, canvas.height, currentX, currentY);
+                stemGrad.addColorStop(0, '#1b5e20');
+                stemGrad.addColorStop(1, '#4caf50');
+
+                ctx.strokeStyle = stemGrad;
                 ctx.stroke();
 
-                // Dibujar una hoja
                 if (this.scale > 0.5) {
-                    ctx.save();
-                    ctx.translate(this.x, canvas.height - this.stemHeight / 2);
-                    ctx.rotate(-Math.PI / 4 + Math.sin(this.time) * 0.1);
-                    ctx.beginPath();
-                    ctx.ellipse(0, 0, 15 * this.scale, 8 * this.scale, 0, 0, Math.PI * 2);
-                    ctx.fillStyle = '#388e3c';
-                    ctx.fill();
-                    ctx.restore();
+                    for (let i = 0; i < this.leaves.length; i++) {
+                        let leaf = this.leaves[i];
+                        let t = leaf.t;
+
+                        let lx = Math.pow(1 - t, 2) * this.x + 2 * (1 - t) * t * cpX + Math.pow(t, 2) * currentX;
+                        let ly = Math.pow(1 - t, 2) * (canvas.height + 100) + 2 * (1 - t) * t * cpY + Math.pow(t, 2) * currentY;
+
+                        ctx.save();
+                        ctx.translate(lx, ly);
+
+                        // Reflejar horizontalmente si la hoja debe ir a la izquierda
+                        ctx.scale(leaf.direction, 1);
+                        ctx.rotate(leaf.angle + (Math.sin(this.time) * 0.05 * leaf.direction));
+
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.quadraticCurveTo(leaf.size * this.scale, leaf.size * -0.5 * this.scale, leaf.size * 2 * this.scale, 0);
+                        ctx.quadraticCurveTo(leaf.size * this.scale, leaf.size * 0.5 * this.scale, 0, 0);
+
+                        ctx.fillStyle = '#388e3c';
+                        ctx.fill();
+
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        ctx.lineTo(leaf.size * 1.8 * this.scale, 0);
+                        ctx.strokeStyle = '#1b5e20';
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+
+                        ctx.restore();
+                    }
                 }
             }
 
@@ -243,49 +349,67 @@
                     this.scale += this.growthSpeed;
                 }
 
-                const currentX = this.x + Math.sin(this.time) * 20;
-                const currentY = this.y + Math.cos(this.time) * 10;
+                // Lógica de interacción
+                if (pointer.x !== null && pointer.y !== null) {
+                    const dx = pointer.x - (this.x + Math.sin(this.time) * 15);
+                    const dy = pointer.y - this.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 120) {
+                        // Empujar la flor alejándola del cursor
+                        this.interactionVelocity -= (dx / distance) * 1.5;
+                    }
+                }
+                
+                // Física de resorte (Spring physics) para volver a la posición original
+                this.interactionVelocity -= this.interactionX * 0.05; // Tensión
+                this.interactionVelocity *= 0.92; // Fricción
+                this.interactionX += this.interactionVelocity;
+
+                const currentX = this.x + Math.sin(this.time) * 15 + this.interactionX;
+                const currentY = this.y + Math.cos(this.time) * 8 + Math.abs(this.interactionX) * 0.2;
 
                 this.drawStem(currentX, currentY);
 
                 ctx.save();
                 ctx.translate(currentX, currentY);
                 ctx.scale(this.scale, this.scale);
-                ctx.rotate(this.angle + Math.sin(this.time) * 0.2);
+                ctx.rotate(this.angle + Math.sin(this.time) * 0.15 + (this.interactionX * 0.015));
 
-                // Dibujar Pétalos
+                // Pétalos con color y borde más suave
                 for (let i = 0; i < this.petals; i++) {
                     ctx.rotate((Math.PI * 2) / this.petals);
                     ctx.beginPath();
-                    ctx.ellipse(0, this.radius, this.radius / 2.5, this.radius, 0, 0, Math.PI * 2);
+                    ctx.ellipse(0, this.radius, this.radius / 3, this.radius, 0, 0, Math.PI * 2);
 
-                    let gradient = ctx.createLinearGradient(0, 0, 0, this.radius * 2);
-                    gradient.addColorStop(0, '#fff59d');
-                    gradient.addColorStop(0.5, '#ffee58');
+                    let gradient = ctx.createRadialGradient(0, this.radius, 0, 0, this.radius, this.radius * 2);
+                    gradient.addColorStop(0, '#fff176');
+                    gradient.addColorStop(0.3, '#ffee58');
                     gradient.addColorStop(1, '#fbc02d');
 
                     ctx.fillStyle = gradient;
                     ctx.fill();
-                    ctx.strokeStyle = '#f57f17';
+
+                    ctx.strokeStyle = 'rgba(245, 127, 23, 0.3)';
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
 
-                // Dibujar Centro
+                // Centro del girasol
                 ctx.beginPath();
                 ctx.arc(0, 0, this.radius / 1.8, 0, Math.PI * 2);
                 let centerGradient = ctx.createRadialGradient(0, 0, 0, 0, 0, this.radius / 1.8);
                 centerGradient.addColorStop(0, '#5d4037');
-                centerGradient.addColorStop(0.7, '#3e2723');
-                centerGradient.addColorStop(1, '#212121');
+                centerGradient.addColorStop(0.5, '#4e342e');
+                centerGradient.addColorStop(1, '#271915');
                 ctx.fillStyle = centerGradient;
                 ctx.fill();
 
-                // Puntos del centro (semillas)
-                ctx.fillStyle = '#fff8e1';
+                // Semillas
+                ctx.fillStyle = 'rgba(210, 150, 80, 0.9)'; // Marrón clarito / dorado
                 for (let seed of this.seeds) {
                     ctx.beginPath();
-                    ctx.arc(seed.x, seed.y, 1.5, 0, Math.PI * 2);
+                    ctx.arc(seed.x, seed.y, 1.2, 0, Math.PI * 2);
                     ctx.fill();
                 }
 
@@ -297,11 +421,11 @@
 
         function initFlowers() {
             flowers.length = 0;
-            const numFlowers = Math.floor(window.innerWidth / 80);
+            const numFlowers = Math.floor(window.innerWidth / 70);
             for (let i = 0; i < numFlowers; i++) {
-                let x = (window.innerWidth / numFlowers) * i + (Math.random() * 40 - 20) + 40;
-                let y = window.innerHeight - 150 - Math.random() * 100;
-                let radius = 35 + Math.random() * 15;
+                let x = (window.innerWidth / numFlowers) * i + (Math.random() * 40 - 20) + 35;
+                let y = window.innerHeight - 150 - Math.random() * 120;
+                let radius = 35 + Math.random() * 18;
                 flowers.push(new Flower(x, y, radius));
             }
         }
@@ -310,13 +434,13 @@
 
         // Luciérnagas
         const fireflies = [];
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 60; i++) {
             fireflies.push({
                 x: Math.random() * window.innerWidth,
                 y: Math.random() * window.innerHeight,
-                size: Math.random() * 2 + 1,
-                speedX: (Math.random() - 0.5) * 1,
-                speedY: (Math.random() - 0.5) * 1,
+                size: Math.random() * 1.5 + 0.5,
+                speedX: (Math.random() - 0.5) * 0.8,
+                speedY: (Math.random() - 0.5) * 0.8,
                 alpha: Math.random()
             });
         }
@@ -325,7 +449,7 @@
             for (let f of fireflies) {
                 f.x += f.speedX;
                 f.y += f.speedY;
-                f.alpha += (Math.random() - 0.5) * 0.1;
+                f.alpha += (Math.random() - 0.5) * 0.05;
 
                 if (f.alpha < 0) f.alpha = 0;
                 if (f.alpha > 1) f.alpha = 1;
@@ -336,12 +460,16 @@
                 if (f.y > canvas.height) f.y = 0;
 
                 ctx.beginPath();
-                ctx.arc(f.x, f.y, f.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 235, 59, ${f.alpha})`;
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#ffeb3b';
+                ctx.arc(f.x, f.y, f.size * 2, 0, Math.PI * 2);
+
+                // Efecto de resplandor para las luciérnagas
+                let glow = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.size * 2);
+                glow.addColorStop(0, `rgba(255, 255, 255, ${f.alpha})`);
+                glow.addColorStop(0.2, `rgba(255, 235, 59, ${f.alpha * 0.8})`);
+                glow.addColorStop(1, `rgba(255, 235, 59, 0)`);
+
+                ctx.fillStyle = glow;
                 ctx.fill();
-                ctx.shadowBlur = 0;
             }
         }
 
